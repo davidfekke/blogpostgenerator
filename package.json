@@ -1,0 +1,37 @@
+{
+  "name": "blogpostgenerator",
+  "description": "This is a CLI for creating blog posts in a folder with frontmatter and folder",
+  "version": "0.0.1",
+  "author": "davidfekke @davidfekke",
+  "bin": {
+    "blog": "./bin/run"
+  },
+  "bugs": "https://github.com/https://github.com/davidfekke/blogpostgenerator/https://github.com/davidfekke/blogpostgenerator/issues",
+  "dependencies": {
+    "@oclif/command": "^1.5.1",
+    "@oclif/config": "^1.7.6",
+    "@oclif/plugin-help": "^2.1.2",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/src"
+  ],
+  "homepage": "https://github.com/davidfekke/blogpostgenerator",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "Apache-2.0",
+  "main": "src/index.js",
+  "oclif": {
+    "bin": "blog"
+  },
+  "repository": "https://github.com/davidfekke/blogpostgenerator",
+  "scripts": {
+    "test": "echo NO TESTS"
+  }
+}
