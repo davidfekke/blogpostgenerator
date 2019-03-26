@@ -2,13 +2,30 @@ const {Command, flags} = require('@oclif/command');
 const moment = require('moment');
 const path = require('path');
 const fs = require('fs');
+const _ = require('lodash');
 
 class BlogpostgeneratorCommand extends Command {
+  createMarkdownFile(mdp, frontmatter) {
+    if (!fs.existsSync(mdp)) {
+      fs.writeFileSync(mdp, frontmatter);
+    } else {
+      this.log(`This file ${mdp} already exists. Change your title using the -t argument to create a unique post.`);
+    }
+  }
+  
   async run() {
     const date = moment().format('YYYY-MM-DD');
     const {flags} = this.parse(BlogpostgeneratorCommand)
-    const title = flags.title || 'Your Title Here'
-    fs.mkdirSync(path.join(process.cwd(), date));
+    const title = flags.title || 'Your Title Here';
+    const folderPath = path.join(process.cwd(), date);
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath);
+    }
+    let markdownFilename = 'index.md';
+    if (title !== 'Your Title Here') {
+      markdownFilename = _.kebabCase(title) + '.md';
+    }
+
     const frontmatter = `---
 layout: post
 title: "${title}"
@@ -18,8 +35,10 @@ date: ${date}
 cover_image: "./unnamed.jpg"
 ---
 `;
-    fs.writeFileSync(path.join(process.cwd(), date, 'index.md'), frontmatter);
-    this.log(`${title} on ${date}`);
+
+    const markdownPath = path.join(process.cwd(), date, markdownFilename);
+    this.createMarkdownFile(markdownPath, frontmatter);
+    this.log(`${markdownFilename} in folder ${date}`);
   }
 }
 
